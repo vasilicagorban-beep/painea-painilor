@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pâinea Străbunilor — Integrala de Secară și Spelta, cu Maia</title>
+<style>
+  :root {
+    --crust: #6b4226;
+    --crust-dark: #3e2a1a;
+    --wheat: #c9a35e;
+    --wheat-light: #f0dfb8;
+    --cream: #faf5ec;
+    --paper: #fffdf8;
+    --ink: #2c231b;
+    --sub: #6b5d4f;
+    --line: #e5dcc9;
+    --card1: #f4ece0;
+    --card2: #eef0e2;
+    --card3: #f6e9e6;
+    --card4: #eae5f2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    line-height: 1.7;
+  }
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 0 40px rgba(60,40,20,0.08);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 460px;
+    overflow: hidden;
+  }
+  .hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20,20,10,0.15) 0%, rgba(15,12,6,0.82) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 40px 48px;
+  }
+  .eyebrow {
+    color: var(--wheat);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    color: #fff;
+    font-size: 46px;
+    margin: 0 0 6px 0;
+    font-weight: normal;
+    letter-spacing: 1px;
+  }
+  .hero p.tag {
+    color: #eee1cc;
+    font-size: 17px;
+    font-style: italic;
+    margin: 0;
+  }
+  .content {
+    padding: 48px 56px;
+  }
+  h2 {
+    font-size: 26px;
+    color: var(--crust-dark);
+    border-bottom: 2px solid var(--wheat);
+    padding-bottom: 10px;
+    margin-top: 48px;
+    letter-spacing: 0.5px;
+  }
+  h2 .ico { margin-right: 10px; }
+  p { font-size: 16.5px; color: var(--ink); }
+  .lead {
+    font-size: 19px;
+    color: var(--crust-dark);
+    font-style: italic;
+    border-left: 3px solid var(--wheat);
+    padding-left: 20px;
+    margin: 28px 0;
+  }
+
+  /* Secțiunea Proces de Obținere */
+  .process-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin: 36px 0;
+  }
+  .step-card {
+    display: flex;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(60,40,20,0.05);
+    transition: transform 0.2s ease;
+  }
+  .step-card:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  .step-img {
+    flex: 1;
+    min-width: 40%;
+    position: relative;
+  }
+  .step-img img {
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+  .step-info {
+    flex: 1.2;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .step-num {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--wheat);
+    background: var(--crust-dark);
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    width: fit-content;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .step-info h3 {
+    margin: 0 0 10px 0;
+    color: var(--crust-dark);
+    font-size: 20px;
+  }
+  .step-info p {
+    margin: 0;
+    font-size: 15px;
+    color: #4a4034;
+    line-height: 1.6;
+  }
+
+  /* Benefits Grid */
+  .benefits-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 24px 0 8px 0;
+  }
+  .bcard {
+    border-radius: 14px;
+    padding: 22px 20px;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(60,40,20,0.08);
+    border: 1px solid rgba(0,0,0,0.04);
+    width: calc(50% - 9px);
+  }
+  .bcard:nth-child(1) { background: var(--card1); }
+  .bcard:nth-child(2) { background: var(--card2); }
+  .bcard:nth-child(3) { background: var(--card3); }
+  .bcard:nth-child(4) { background: var(--card4); }
+  
+  .sticker {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 2px 6px rgba(60,40,20,0.15);
+    margin-bottom: 12px;
+  }
+  .bcard h4 {
+    font-family: Arial, sans-serif;
+    font-size: 15.5px;
+    color: var(--crust-dark);
+    margin: 0 0 8px 0;
+  }
+  .bcard p {
+    font-size: 14px;
+    color: #4a4034;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  .divider {
+    text-align: center;
+    color: var(--wheat);
+    font-size: 22px;
+    margin: 40px 0;
+    letter-spacing: 12px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--crust-dark);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .cta {
+    margin-top: 56px;
+    background: var(--crust-dark);
+    color: #f4ecd8;
+    text-align: center;
+    padding: 44px 30px;
+    border-radius: 6px;
+  }
+  .cta h3 {
+    color: #fff;
+    font-size: 26px;
+    margin: 0 0 6px 0;
+    font-weight: normal;
+  }
+  .cta .sub {
+    color: var(--wheat-light);
+    font-size: 15px;
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+  .cta p { color: #d9cbb0; margin: 4px 0; }
+  .cta .phone {
+    display: inline-block;
+    margin-top: 14px;
+    background: var(--wheat);
+    color: var(--crust-dark);
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    padding: 10px 24px;
+    border-radius: 24px;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+  }
+  .cta .note {
+    font-family: Arial, sans-serif;
+    font-size: 12.5px;
+    color: #b9a685;
+    margin-top: 16px;
+  }
+  .footer {
+    text-align: center;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: var(--sub);
+  }
+
+  @media (max-width: 650px) {
+    .content { padding: 24px; }
+    .hero { height: 320px; }
+    .hero-overlay { padding: 24px; }
+    .hero h1 { font-size: 32px; }
+    .bcard { width: 100%; }
+    .step-card, .step-card:nth-child(even) {
+      flex-direction: column;
+    }
+    .step-img img {
+      height: 180px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80" alt="Pâinea Străbunilor">
+    <div class="hero-overlay">
+      <div class="eyebrow">Artizanal &amp; Tradițional</div>
+      <h1>Pâinea Străbunilor</h1>
+      <p class="tag">Integrala de Secară și Spelta, fermentată lent cu maia naturală</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <span class="badge">RETETĂ TRADIȚIONALĂ</span>
+    <p class="lead">Când grâul întâlnește timpul și maiaul pur, pâinea devine un aliment viu, hrănitor și ușor de digerat.</p>
+
+    <!-- Secțiunea Proces de Obținere -->
+    <h2><span class="ico">🍞</span> Procesul de Obținere</h2>
+    <p>O pâine curată cere răbdare, respect față de ingrediente și pași stabiliți cu grijă:</p>
+
+    <div class="process-timeline">
+
+      <!-- Pasul 1 -->
+      <div class="step-card">
+        <div class="step-img">
+          <!-- Înlocuiește src cu poza ta, ex: pas1-maia.jpg -->
+          <img src="https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&w=600&q=80" alt="Activarea maialei">
+        </div>
+        <div class="step-info">
+          <span class="step-num">PASUL 1</span>
+          <h3>Activarea și Maestrul Secret</h3>
+          <p>Maiaua hrănită, plină de bule și energie, se dizolvă în apă călduță alături de o linguriță de miere 😜 — micul secret care hrănește culturile vii și le dă avânt.</p>
+        </div>
+      </div>
+
+      <!-- Pasul 2 -->
+      <div class="step-card">
+        <div class="step-img">
+          <!-- Înlocuiește src cu poza ta, ex: pas2-aluat.jpg -->
+          <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=600&q=80" alt="Unirea cerealelor">
+        </div>
+        <div class="step-info">
+          <span class="step-num">PASUL 2</span>
+          <h3>Unirea Cerealelor &amp; Sarea</h3>
+          <p>Se adaugă făinurile integrale de secară și spelta, iar după o omogenizare ușoară, se încorporează sarea fină pentru a desăvârși structura aluatului.</p>
+        </div>
+      </div>
+
+      <!-- Pasul 3 -->
+      <div class="step-card">
+        <div class="step-img">
+          <!-- Înlocuiește src cu poza ta, ex: pas3-dospire.jpg -->
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="Prima dospire la cald">
+        </div>
+        <div class="step-info">
+          <span class="step-num">PASUL 3</span>
+          <h3>Prima Dospire (la cald)</h3>
+          <p>Aluatul se odihnește 2 ore la loc cald și ferit, timp în care maiaua își începe magia fermentației naturale.</p>
+        </div>
+      </div>
+
+      <!-- Pasul 4 -->
+      <div class="step-card">
+        <div class="step-img">
+          <!-- Înlocuiește src cu poza ta, ex: pas4-maturare.jpg -->
+          <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=600&q=80" alt="Maturarea la rece">
+        </div>
+        <div class="step-info">
+          <span class="step-num">PASUL 4</span>
+          <h3>Maturarea la Rece (16–18 ore)</h3>
+          <p>După modelare și așezare în formă, aluatul trece printr-o dospire lentă la frigider. Această odihnă prelungită descompune glutenul, amplifică nutrienții și creează gustul inconfundabil, ușor acidulat.</p>
+        </div>
+      </div>
+
+      <!-- Pasul 5 -->
+      <div class="step-card">
+        <div class="step-img">
+          <!-- Înlocuiește src cu poza ta, ex: pas5-coacere.jpg -->
+          <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=600&q=80" alt="Coacerea cu abur">
+        </div>
+        <div class="step-info">
+          <span class="step-num">PASUL 5</span>
+          <h3>Coacerea cu Abur și Tihnă</h3>
+          <p>Se coace la vatră în baie de abur pentru o creștere spectaculoasă și o coajă crocantă, apoi se lasă la așezat și răcit — momentul în care miezul își definitivează textura perfectă.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Beneficii -->
+    <h2><span class="ico">🌾</span> Beneficiile Pâinii cu Maia</h2>
+    <div class="benefits-grid">
+      <div class="bcard">
+        <div class="sticker">🍃</div>
+        <h4>Digestie Ușoară</h4>
+        <p>Procesul de fermentație lungă descompune carbohidrații complecși și proteinele de gluten, fiind blând cu stomacul.</p>
+      </div>
+
+      <div class="bcard">
+        <div class="sticker">📊</div>
+        <h4>Indice Glicemic Scăzut</h4>
+        <p>Acizii organici rezultați din fermentație încetinesc eliberarea glucozei în sânge, prevenind fluctuațiile bruste de energie.</p>
+      </div>
+
+      <div class="bcard">
+        <div class="sticker">🛡️</div>
+        <h4>Absorbție de Minerale</h4>
+        <p>Maiaua neutralizează acidul fitic din făina integrală, permițând corpului să absoarbă fierul, magneziul și zincul.</p>
+      </div>
+
+      <div class="bcard">
+        <div class="sticker">🍞</div>
+        <h4>Gust și Proaspețime Naturale</h4>
+        <p>Aciditatea naturală acționează ca un conservant ecologic, menținând pâinea proaspătă zile la rând fără aditivi.</p>
+      </div>
+    </div>
+
+    <div class="divider">❖ ❖ ❖</div>
+
+    <!-- Contact & Comandă -->
+    <div class="cta">
+      <h3>Comandă Pâine Proaspătă</h3>
+      <div class="sub">Coaptă zilnic pe vatră în loturi mici</div>
+      <p>Pentru rezervări și livrări locale, ne puteți contacta direct:</p>
+      <a href="tel:+40700000000" class="phone">📞 0700 000 000</a>
+      <div class="note">Livrări disponibile de marți până sâmbătă.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © Pâinea Străbunilor — Toate drepturile rezervate.
+  </div>
+
+</div>
+</body>
+</html>
